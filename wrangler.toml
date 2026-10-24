@@ -1,6 +1,6 @@
 name = "netops-manager"
 main = "src/index.js"
-compatibility_date = "2026-10-25"
+compatibility_date = "2026-10-24"
 
 [vars]
 APP_NAME = "NetOps Manager"
