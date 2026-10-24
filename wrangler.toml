@@ -8,4 +8,4 @@ APP_NAME = "NetOps Manager"
 [[d1_databases]]
 binding = "DB"
 database_name = "netops-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "ccc65b9d-5447-4c2e-b052-2160b3887621"
