@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'operator',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS device_groups (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  description TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS devices (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  group_id INTEGER,
+  ip_address TEXT NOT NULL,
+  domain TEXT,
+  port INTEGER NOT NULL DEFAULT 22,
+  protocol TEXT NOT NULL DEFAULT 'ssh',
+  username TEXT,
+  enabled INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (group_id) REFERENCES device_groups(id) ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS operation_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  device_id INTEGER,
+  action TEXT NOT NULL,
+  status TEXT NOT NULL,
+  message TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE SET NULL
+);
+CREATE INDEX IF NOT EXISTS idx_devices_group ON devices(group_id);
+CREATE INDEX IF NOT EXISTS idx_logs_device ON operation_logs(device_id);
+CREATE INDEX IF NOT EXISTS idx_logs_created ON operation_logs(created_at);

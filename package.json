@@ -1,0 +1,15 @@
+{
+  "name": "netops-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 migrations apply netops-db --local",
+    "db:remote": "wrangler d1 migrations apply netops-db --remote",
+    "db:ops": "wrangler d1 execute netops-db --remote --file=migrations/0002_ops.sql"
+  },
+  "dependencies": {
+    "wrangler": "^4.44.0"
+  }
+}
